@@ -33,9 +33,17 @@ router.delete("/:cartId", async (req, res, next) => {
 
 router.put("/:cartId", async (req, res, next) => {
   console.log("REQ>BODY IN UPDATE CART", req.body)
+  // REQ>BODY IN UPDATE CART { cartId: 102, id: '2' }
   try {
+    const cartX = await CartProduct.findOne({where: {productId: req.body.id, cartId: req.params.cartId}})
+  
+    console.log("CARTX: ", cartX)
+    if(cartX){
+      cartX.increment(['quantity'], {by: 1})
+    }else{
     const cart = await Cart.findByPk(req.params.cartId);
     res.send(await cart.addProduct(req.body.id));
+    }
   } catch (error) {
     console.log("Error 1 in update cart route");
     next(error);
