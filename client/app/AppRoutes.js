@@ -11,7 +11,7 @@ import SingleProductAdmin from "../features/singleProduct/SingleProductAdmin";
 import AllUsersAdmin from '../features/usersadmin/AllUsers';
 import SingleUser from '../features/usersadmin/SingleUser';
 import Cart from '../features/cart/Cart';
-
+import Checkout from '../features/checkout/Checkout'
 /**
  * COMPONENT
  */
@@ -45,6 +45,9 @@ const AppRoutes = () => {
           <Route
           path="/products/:id"
           element={<SingleProduct />} />
+          <Route
+          path="/checkout"
+          element={<Checkout />} />
         </Routes>
         
       ) : isAdmin ?
