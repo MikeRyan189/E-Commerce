@@ -1,55 +1,3 @@
-// import React, { useEffect } from 'react'
-// import { useSelector, useDispatch } from "react-redux";
-// import { Link, useParams } from "react-router-dom"
-// import { getCart,selectCart } from './cartSlice'
-
-// import { selectProducts } from '../allproducts/productsSlice';
-// import { fetchProductsAsync } from '../allproducts/productsSlice';
-
-
-
-// import { selectMe } from '../auth/authSlice';
-
-// const Cart = (props) => {
-
-// console.log("PROPS IN CART COMPONENT: ", props.userId)
-// let cartId = props.userId
-// console.log("CARTID: ",typeof cartId)
-
- 
-// const products = useSelector(selectProducts);
-
-// const me = useSelector(selectMe)
-// console.log("MEMEMEME: ", me.id)
-// const dispatch = useDispatch()
-
-
-// useEffect(() => {
-//   dispatch(fetchProductsAsync())
-// }, [dispatch] );
- 
- 
-//  return (
-//   <div id="allProducts">
-
-//   <div>
-//     <h1>Your products</h1>
-//       <ul className="media-list">
-//         {products && products.length ? products.filter((product) => product.cartId === parseInt(cartId))
-//           .map((product) => (
-//             <Link to={`/products/${product.id}`}>
-//               <img src={product.imageUrl} />
-//               <p>{product.name}</p>
-//               <p>${product.price}</p>
-//             </Link>
-//           )): ""}
-//       </ul>
-//     </div>
-// </div>
-//  )
-// }
- 
-// export default Cart
 
 
 
@@ -60,17 +8,35 @@ import { getCartAsync, selectCart, removeFromCartAsync } from './cartSlice'
 
 import { selectProducts } from '../allproducts/productsSlice';
 import { fetchProductsAsync } from '../allproducts/productsSlice';
+import { getAllCartProductAsync, selectCartProduct } from './cartProductSlice';
 
 import { selectMe } from '../auth/authSlice';
+import { editCartAsync } from "../cart/cartSlice";
 
 
 const Cart = () => {
+
   const me = useSelector(selectMe)
+  const cartProduct = useSelector(selectCartProduct)
+  
+  console.log("CART PRODUCT: ", cartProduct)
+
+ 
+  const cart = useSelector(selectCart)
+  // console.log("CART IN CART COMPONENT: ", cart)
   const meId = me.id
+  const cartId = cart.id
+  // console.log("CARTID: ",typeof cartId)
+  const products = cart.products
   const dispatch = useDispatch()
 
-  const cart = useSelector(selectCart)
-  const products = cart.products
+  console.log("PRODUCTSSSS : ", cart)
+
+
+// Get all cartProducts where cartId: cartID
+// add cartProduts to state
+// Map through cartProducts and get quantity of each
+
 
   let totalMap;
   if(products && products.length){
@@ -87,16 +53,21 @@ const Cart = () => {
   
 
   //  COULD USE COUNT MAGIC METHOD
-  const getNumber = (productId)=>{
-    const idArray = products.filter((product) => {
-      return Number(product.id) === productId
-    })
-      return idArray.length
-  }
+  // const getNumber = (productId)=>{
+  //   const idArray = products.filter((product) => {
+  //     return Number(product.id) === productId
+  //   })
+  //     return idArray.length
+  // }
 
   useEffect(() => {
     dispatch(getCartAsync(me.id))
-  }, [dispatch] );
+  //   .then(()=>{
+  //   dispatch(getAllCartProductAsync(me.id))
+  // })
+    // .then(()=>console.log( "CART PRODUCT ", cartId))
+    
+  }, [dispatch, handleAddToCart] );
   
 
   const handleRemoveFromCart = (productId)=>{
@@ -104,7 +75,15 @@ const Cart = () => {
       dispatch(getCartAsync(me.id))
     })
   }
- 
+  
+  const handleAddToCart = (product) => {
+    const id = product.id
+    dispatch(editCartAsync({cartId, id})).then(()=>
+      dispatch(getCartAsync(me.id))
+    )
+    console.log("ID",id)
+  };
+  
  return (
   <div id="allProducts">
   <div>
@@ -118,8 +97,13 @@ const Cart = () => {
               <img src={product.imageUrl} />
               <p>{product.name}</p>
               <p>${product.price}</p>
+              <p>Quantity{product.cartProduct.quantity}</p>
             </Link>
-            <p>Quantity: {getNumber(product.id)}</p>
+            <button onClick={()=>handleAddToCart(product)}>Increase Quantity</button>
+            <button>Decrease Quantity</button>
+            
+            
+            {/* <p>Quantity: {cartProduct[0].quantity}</p> */}
             <button onClick={()=> handleRemoveFromCart(product.id)}>Delete From Cart</button>
             </div>
           )): ""}

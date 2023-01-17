@@ -88,6 +88,16 @@ export const editCartAsync = createAsyncThunk("editCart", async (cart) => {
       }
   });
 
+  export const getCartProductAsync = createAsyncThunk("getCartProduct", async (cartProduct)=>{
+    
+    try{
+        const { data } = await axios.get(`/api/cartProduct/${cartProduct.cartId}/${cartProduct.productId}`)
+        return data
+    }catch(error){
+        console.log("Error in getCart thunk", error)
+    }
+ })
+
  
 const initialState =[]
 const cart = createSlice({
@@ -98,6 +108,14 @@ const cart = createSlice({
    },
    extraReducers: (builder) => {
        builder.addCase(getCartAsync.fulfilled, (state, action)=>{
+            // action.payload.forEach(product=>{
+            //     if(product.quantity){
+            //         product.quantity++
+            //     }else{
+            //         product.quantity = 1
+            //     }
+            // });
+            console.log("ACTION PAYLOAD : ", action.payload)
            return action.payload
        }),
     //    builder.addCase(getCart2.fulfilled, c(state, action)=>{
@@ -115,7 +133,7 @@ const cart = createSlice({
  
  
 export const selectCart = (state)=>{
-   console.log("HELLE")
+  //  console.log("HELLE")
    return state.cart
 }
  
