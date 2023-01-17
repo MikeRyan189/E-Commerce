@@ -55,7 +55,7 @@
 
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { getCartAsync, selectCart, removeFromCartAsync } from './cartSlice'
 
 import { selectProducts } from '../allproducts/productsSlice';
@@ -68,7 +68,7 @@ const Cart = () => {
   const me = useSelector(selectMe)
   const meId = me.id
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   const cart = useSelector(selectCart)
   const products = cart.products
 
@@ -104,6 +104,9 @@ const Cart = () => {
       dispatch(getCartAsync(me.id))
     })
   }
+  const handleNavigate = () =>{
+    navigate('/checkout')
+  }
  
  return (
   <div id="allProducts">
@@ -125,7 +128,7 @@ const Cart = () => {
           )): ""}
       </ul>
     </div>
-    <button>Checkout</button>
+    <button onClick={handleNavigate}>Checkout</button>
 </div>
  )
 }
