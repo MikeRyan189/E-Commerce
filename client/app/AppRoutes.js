@@ -11,7 +11,7 @@ import SingleProductAdmin from "../features/singleProduct/SingleProductAdmin";
 import AllUsersAdmin from '../features/usersadmin/AllUsers';
 import SingleUser from '../features/usersadmin/SingleUser';
 import Cart from '../features/cart/Cart';
-
+import GuestCart from "../features/guestCart/GuestCart";
 /**
  * COMPONENT
  */
@@ -127,6 +127,7 @@ const AppRoutes = () => {
           
          {/* <Route path="/admin/products/:id" element={<SingleProductAdmin />} /> */}
            
+         <Route path="/guestCart" element={<GuestCart />} />
            
 
           <Route

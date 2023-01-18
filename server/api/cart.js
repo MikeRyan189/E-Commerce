@@ -39,7 +39,8 @@ router.put("/:cartId", async (req, res, next) => {
   
     console.log("CARTX: ", cartX)
     if(cartX){
-      cartX.increment(['quantity'], {by: 1})
+      // CHANGED THIS TO UPDATE STAE ON INCREASE/DECREASE
+      res.send(cartX.increment(['quantity'], {by: req.body.amount}))
     }else{
     const cart = await Cart.findByPk(req.params.cartId);
     res.send(await cart.addProduct(req.body.id));

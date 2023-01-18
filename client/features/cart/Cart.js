@@ -41,7 +41,7 @@ const Cart = () => {
   let totalMap;
   if(products && products.length){
   totalMap = products.map((product)=>{
-    return product.price
+    return product.price  * product.cartProduct.quantity
   })
   }else{
     totalMap = []
@@ -67,18 +67,28 @@ const Cart = () => {
   // })
     // .then(()=>console.log( "CART PRODUCT ", cartId))
     
-  }, [dispatch, handleAddToCart] );
+  }, [dispatch] );
   
 
   const handleRemoveFromCart = (productId)=>{
     dispatch(removeFromCartAsync({productId, meId})).then(()=>{
-      dispatch(getCartAsync(me.id))
+      dispatch(getCartAsync(meId))
     })
   }
   
   const handleAddToCart = (product) => {
+    const amount = 1
     const id = product.id
-    dispatch(editCartAsync({cartId, id})).then(()=>
+    dispatch(editCartAsync({cartId, id, amount})).then(()=>
+      dispatch(getCartAsync(meId))
+    )
+    console.log("ID",id)
+  };
+
+  const handleDecrementCart = (product) => {
+    const amount = -1
+    const id = product.id
+    dispatch(editCartAsync({cartId, id, amount})).then(()=>
       dispatch(getCartAsync(me.id))
     )
     console.log("ID",id)
@@ -88,28 +98,29 @@ const Cart = () => {
   <div id="allProducts">
   <div>
     <h1>Your products</h1>
-    <h1>TOTAL: {total}</h1>
+    <h1>CART TOTAL: ${total}</h1>
+    <button>Checkout</button>
       <ul className="media-list">
         {products && products.length ? 
           products.map((product) => (
-            <div>
+            <div key={product.id}>
             <Link to={`/products/${product.id}`}>
               <img src={product.imageUrl} />
               <p>{product.name}</p>
-              <p>${product.price}</p>
-              <p>Quantity{product.cartProduct.quantity}</p>
+              <p>${product.price} each</p>
+              <p>Quantity: {product.cartProduct.quantity}</p>
             </Link>
             <button onClick={()=>handleAddToCart(product)}>Increase Quantity</button>
-            <button>Decrease Quantity</button>
+            <button onClick={()=>handleDecrementCart(product)}>Decrease Quantity</button>
             
             
             {/* <p>Quantity: {cartProduct[0].quantity}</p> */}
-            <button onClick={()=> handleRemoveFromCart(product.id)}>Delete From Cart</button>
+            <button onClick={()=> handleRemoveFromCart(product.id)}>Remove all from Cart</button>
             </div>
           )): ""}
       </ul>
     </div>
-    <button>Checkout</button>
+    
 </div>
  )
 }

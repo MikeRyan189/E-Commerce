@@ -60,6 +60,7 @@ import axios from "axios";
 // })
 
 export const getCartAsync = createAsyncThunk("getCart", async (userId)=>{
+  console.log("HITTTT get cart async")
     try{
         const { data } = await axios.get(`/api/cart/${userId}/cart`)
         return data
@@ -72,6 +73,7 @@ export const editCartAsync = createAsyncThunk("editCart", async (cart) => {
     console.log("CART IN EDIT CART ASYNC: ", cart)
       try{
     const { data } = await axios.put(`/api/cart/${cart.cartId}`, cart);
+    console.log("DATERRRRR : ", data)
     return data;
       }catch(error){
         console.log("ERROR in EDIT CART THUNK")
@@ -122,10 +124,11 @@ const cart = createSlice({
     //     return action.payload
     // })
     builder.addCase(removeFromCartAsync.fulfilled, (state, action)=>{
-        console.log("REMOVE FROM CART THUNK FULFILLED", action.payload)
+        // console.log("REMOVE FROM CART THUNK FULFILLED", action.payload)
         return action.payload
     }),
     builder.addCase(editCartAsync.fulfilled, (state, action)=>{
+      console.log("AXION PAYLOADD: ", action.payload)
         return action.payload
     })
    }
