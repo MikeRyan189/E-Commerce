@@ -3,7 +3,7 @@
 
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { getCartAsync, selectCart, removeFromCartAsync } from './cartSlice'
 
 import { selectProducts } from '../allproducts/productsSlice';
@@ -17,12 +17,13 @@ import { editCartAsync } from "../cart/cartSlice";
 const Cart = () => {
 
   const me = useSelector(selectMe)
-
-  const cart = useSelector(selectCart)
   const meId = me.id
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const cart = useSelector(selectCart)
   const cartId = cart.id
   const products = cart.products
-  const dispatch = useDispatch()
+  
 
   
 
@@ -51,6 +52,7 @@ const Cart = () => {
       dispatch(getCartAsync(meId))
     })
   }
+
   
   const handleAddToCart = (product) => {
     const amount = 1
@@ -68,6 +70,10 @@ const Cart = () => {
     )
   };
   
+   const handleNavigate = () =>{
+    navigate('/checkout')
+  }
+
  return (
   <div id="allProducts">
   <div>
@@ -91,7 +97,9 @@ const Cart = () => {
           )): ""}
       </ul>
     </div>
-    
+
+    <button onClick={handleNavigate}>Checkout</button>
+
 </div>
  )
 }
