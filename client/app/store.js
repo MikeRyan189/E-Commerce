@@ -5,8 +5,7 @@ import productsReducer from '../features/allproducts/productsSlice';
 import product from "../features/singleProduct/singleProductSlice";
 import usersReducer from '../features/usersadmin/usersSlice';
 import singleUserReducer from '../features/usersadmin/singleUserSlice';
-// Connected with the cart if you decide to use || delete if not
-import cartReducer from '../features/cart/cartSlice'; 
+import cartReducer from '../features/cart/cartSlice';
 
 const store = configureStore({
   reducer: { auth: authReducer,
@@ -14,7 +13,8 @@ const store = configureStore({
              singleProduct: product,
              users: usersReducer,
              singleUser: singleUserReducer,
-             cart: cartReducer},
+             cart: cartReducer,
+             },
 
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

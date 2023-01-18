@@ -13,26 +13,22 @@ const AllProducts = () => {
   const cartId = me.id
   
   const dispatch = useDispatch()
+  const isLoggedIn = useSelector((state) => !!state.auth.me.id);
+
+
 
   const handleAddToCart = (product) => {
     const id = product.id
     dispatch(editCartAsync({cartId, id}))
-    console.log("ID",id)
   };
 
-  
-  // const handleAddToCart = (product) => {
 
-  //   const id = product.id
-  
-  //     dispatch(editCartAsync({cartId,  id})).then(()=>{
-  //       dispatch(fetchProductsAsync());
-  //     })
-  //     console.log("ID",id)
-  //   };
+  const handleAddToGuestCart = (product) => {
+ localStorage.setItem(`${product.id}`, JSON.stringify(product))
+    };
+
 
   useEffect(() => {
-    console.log("CART ID: ", cartId)
     dispatch(fetchProductsAsync());
   }, [dispatch] );
 
@@ -46,7 +42,7 @@ const AllProducts = () => {
               <p>{product.name}</p>
               <p>${product.price}</p>
             </Link>
-            <button onClick={() => handleAddToCart(product)}>Add to cart</button>
+            <button onClick={isLoggedIn ? () => handleAddToCart(product) :()=> handleAddToGuestCart(product)}>Add to cart</button>
           </li>
         ))}
       </ul>

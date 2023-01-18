@@ -1,55 +1,3 @@
-// import React, { useEffect } from 'react'
-// import { useSelector, useDispatch } from "react-redux";
-// import { Link, useParams } from "react-router-dom"
-// import { getCart,selectCart } from './cartSlice'
-
-// import { selectProducts } from '../allproducts/productsSlice';
-// import { fetchProductsAsync } from '../allproducts/productsSlice';
-
-
-
-// import { selectMe } from '../auth/authSlice';
-
-// const Cart = (props) => {
-
-// console.log("PROPS IN CART COMPONENT: ", props.userId)
-// let cartId = props.userId
-// console.log("CARTID: ",typeof cartId)
-
- 
-// const products = useSelector(selectProducts);
-
-// const me = useSelector(selectMe)
-// console.log("MEMEMEME: ", me.id)
-// const dispatch = useDispatch()
-
-
-// useEffect(() => {
-//   dispatch(fetchProductsAsync())
-// }, [dispatch] );
- 
- 
-//  return (
-//   <div id="allProducts">
-
-//   <div>
-//     <h1>Your products</h1>
-//       <ul className="media-list">
-//         {products && products.length ? products.filter((product) => product.cartId === parseInt(cartId))
-//           .map((product) => (
-//             <Link to={`/products/${product.id}`}>
-//               <img src={product.imageUrl} />
-//               <p>{product.name}</p>
-//               <p>${product.price}</p>
-//             </Link>
-//           )): ""}
-//       </ul>
-//     </div>
-// </div>
-//  )
-// }
- 
-// export default Cart
 
 
 
@@ -61,21 +9,28 @@ import { getCartAsync, selectCart, removeFromCartAsync } from './cartSlice'
 import { selectProducts } from '../allproducts/productsSlice';
 import { fetchProductsAsync } from '../allproducts/productsSlice';
 
+
 import { selectMe } from '../auth/authSlice';
+import { editCartAsync } from "../cart/cartSlice";
 
 
 const Cart = () => {
+
   const me = useSelector(selectMe)
   const meId = me.id
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const cart = useSelector(selectCart)
+  const cartId = cart.id
   const products = cart.products
+  
+
+  
 
   let totalMap;
   if(products && products.length){
   totalMap = products.map((product)=>{
-    return product.price
+    return product.price  * product.cartProduct.quantity
   })
   }else{
     totalMap = []
@@ -86,13 +41,6 @@ const Cart = () => {
   }
   
 
-  //  COULD USE COUNT MAGIC METHOD
-  const getNumber = (productId)=>{
-    const idArray = products.filter((product) => {
-      return Number(product.id) === productId
-    })
-      return idArray.length
-  }
 
   useEffect(() => {
     dispatch(getCartAsync(me.id))
@@ -101,34 +49,57 @@ const Cart = () => {
 
   const handleRemoveFromCart = (productId)=>{
     dispatch(removeFromCartAsync({productId, meId})).then(()=>{
-      dispatch(getCartAsync(me.id))
+      dispatch(getCartAsync(meId))
     })
   }
-  const handleNavigate = () =>{
+
+  
+  const handleAddToCart = (product) => {
+    const amount = 1
+    const id = product.id
+    dispatch(editCartAsync({cartId, id, amount})).then(()=>
+      dispatch(getCartAsync(meId))
+    )
+  };
+
+  const handleDecrementCart = (product) => {
+    const amount = -1
+    const id = product.id
+    dispatch(editCartAsync({cartId, id, amount})).then(()=>
+      dispatch(getCartAsync(me.id))
+    )
+  };
+  
+   const handleNavigate = () =>{
     navigate('/checkout')
   }
- 
+
  return (
   <div id="allProducts">
   <div>
     <h1>Your products</h1>
-    <h1>TOTAL: {total}</h1>
+    <h1>CART TOTAL: ${total}</h1>
+    <button>Checkout</button>
       <ul className="media-list">
         {products && products.length ? 
           products.map((product) => (
-            <div>
+            <div key={product.id}>
             <Link to={`/products/${product.id}`}>
               <img src={product.imageUrl} />
               <p>{product.name}</p>
-              <p>${product.price}</p>
+              <p>${product.price} each</p>
+              <p>Quantity: {product.cartProduct.quantity}</p>
             </Link>
-            <p>Quantity: {getNumber(product.id)}</p>
-            <button onClick={()=> handleRemoveFromCart(product.id)}>Delete From Cart</button>
+            <button onClick={()=>handleAddToCart(product)}>Increase Quantity</button>
+            <button onClick={()=>handleDecrementCart(product)}>Decrease Quantity</button>
+            <button onClick={()=> handleRemoveFromCart(product.id)}>Remove all from Cart</button>
             </div>
           )): ""}
       </ul>
     </div>
+
     <button onClick={handleNavigate}>Checkout</button>
+
 </div>
  )
 }

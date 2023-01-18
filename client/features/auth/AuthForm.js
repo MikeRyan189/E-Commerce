@@ -1,7 +1,7 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { authenticate } from '../../app/store';
-import  Home  from '../home/Home';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { authenticate } from "../../app/store";
+import Home from "../home/Home";
 /**
   The AuthForm component can be used for Login or Sign Up.
   Props for Login: name="login", displayName="Login"
@@ -13,14 +13,8 @@ const AuthForm = ({ name, displayName }) => {
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
-  
-  const notLoggedIn = useSelector((state) => !!state.auth.me);
-  console.log("NOT LOGGEN IN Auth form: ", notLoggedIn)
-  console.log("LOGGEN IN Auth from: ", isLoggedIn)
 
-  const isAdmin = useSelector((state) => !!state.auth.me.isAdmin === true)
-  console.log("IS ADMIN Auth from????: ", isAdmin)
-
+  const isAdmin = useSelector((state) => !!state.auth.me.isAdmin === true);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -32,27 +26,29 @@ const AuthForm = ({ name, displayName }) => {
 
   return (
     <>
-    {!isLoggedIn || (isLoggedIn && isAdmin) ? (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
+      {!isLoggedIn || (isLoggedIn && isAdmin) ? (
         <div>
-          <label htmlFor="username">
-            <small>Username</small>
-          </label>
-          <input name="username" type="text" />
+          <form onSubmit={handleSubmit} name={name}>
+            <div>
+              <label htmlFor="username">
+                <small>Username</small>
+              </label>
+              <input name="username" type="text" />
+            </div>
+            <div>
+              <label htmlFor="password">
+                <small>Password</small>
+              </label>
+              <input name="password" type="password" />
+            </div>
+            <div>
+              <button type="submit">{displayName}</button>
+            </div>
+          </form>
         </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-      
-      </form>
-    </div> ) : <Home />}
+      ) : (
+        <Home />
+      )}
     </>
   );
 };

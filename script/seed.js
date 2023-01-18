@@ -18,7 +18,8 @@ const seed = async () => {
       price: faker.commerce.price(),
       description: faker.commerce.productDescription(),
       imageUrl: faker.image.imageUrl(),  
-      quantity : Math.floor(Math.random() * 100),   
+      quantity : Math.floor(Math.random() * 100),
+      cartQuantity: 1   
     });
   }
   //await User.create({username: "admin", password: "12345", isAdmin: true })
