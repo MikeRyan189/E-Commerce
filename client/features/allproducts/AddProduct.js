@@ -18,6 +18,7 @@ const AddProduct = () => {
     dispatch(addProductAsync({ name, price, description, imageUrl, quantity })).then(()=>{dispatch(fetchProductsAsync())});
   };
   
+  
   return (
     <form id="productForm" onSubmit={handleSubmit}>
       <label htmlFor="imageUrl">Image Url:</label>

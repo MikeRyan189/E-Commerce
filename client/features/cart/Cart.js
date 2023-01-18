@@ -38,7 +38,7 @@ const Cart = () => {
   if(totalMap[0]){
   total = totalMap.reduce((a,b)=> a + b)
   }
-  
+  // console.log("TOTALLL: ", total)
 
 
   useEffect(() => {
