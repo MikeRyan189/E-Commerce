@@ -29,6 +29,14 @@ const Product = db.define("product", {
       notEmpty: true,
     },
   },
+  cartQuantity: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    defaultValue: 1,
+    validate: {
+      notEmpty: true,
+    },
+  },
 });
 
 Product.prototype.updateQuantity = async function (quantity) {
