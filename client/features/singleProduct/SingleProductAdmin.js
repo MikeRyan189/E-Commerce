@@ -24,17 +24,18 @@ const SingleProductAdmin = () => {
   const { name, price, description, imageUrl, quantity } = singleProduct.singleProduct;
 
   return (
-    <div id="singleProduct">
-      <EditProduct />
-      <div id="singleProductInfo">
-        <img src={imageUrl} />
-        <h1>{name}</h1>
-        <h2>${price}</h2>
-        <p>{description}</p>
-        <p>Quantity: {quantity}</p>
-      </div>
+    <div className="flex flex-col sm:flex-row">
+        <img className="sm:w-1/3 h-1/4 m-2" src={imageUrl} />
+        <div className="sm:w-2/3 p-4">
+            <h1 className="text-3xl font-medium text-indigo-500">{name}</h1>
+            <h2 className="text-xl font-medium text-indigo-400">${price}</h2>
+            <p className="text-lg font-medium text-indigo-400">{description}</p>
+            <p className="text-lg font-medium text-indigo-400">Quantity: {quantity}</p>
+            <EditProduct />
+        </div>
     </div>
-  );
+);
+
 };
 
 export default SingleProductAdmin;

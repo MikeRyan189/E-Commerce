@@ -37,41 +37,88 @@ const EditProduct = () => {
   };
 
   return (
-    <div id="editProduct">
-      <h1>Edit Product</h1>
-      <form onSubmit={handleEditProduct}>
-        <label htmlFor="imageUrl">Image Url:</label>
-        <input
-          name="imageUrl"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-        />
-        <label htmlFor="name">Name:</label>
-        <input
-          name="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <label htmlFor="price">Price:</label>
-        <input
-          name="price"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-        />
-        <label htmlFor="description">Description:</label>
-        <input
-          name="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <label htmlFor="quantity">Quantity:</label>
-        <input
-          name="quantity"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-        />
-        <button type="submit">Edit</button>
-        {/* <button onClick={() => setEdit(!edit)} type="submit">Edit Product</button> */}
+    <div className="flex flex-col items-center">
+      <h1 className="text-3xl font-medium text-indigo-500">Edit Product</h1>
+      <form 
+        onSubmit={handleEditProduct}
+        className="bg-white p-5 rounded-lg shadow-md w-full max-w-md"
+      >
+        <div className="mb-4">
+          <label 
+            htmlFor="imageUrl"
+            className="block text-gray-700 font-medium mb-2"
+          >
+            Image Url:
+          </label>
+          <input
+            className="border border-gray-400 p-2 w-full"
+            name="imageUrl"
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
+          />
+        </div>
+        <div className="mb-4">
+          <label 
+            htmlFor="name"
+            className="block text-gray-700 font-medium mb-2"
+          >
+            Name:
+          </label>
+          <input
+            className="border border-gray-400 p-2 w-full"
+            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className="mb-4">
+          <label 
+            htmlFor="price"
+            className="block text-gray-700 font-medium mb-2"
+          >
+            Price:
+          </label>
+          <input
+            className="border border-gray-400 p-2 w-full"
+            name="price"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
+        </div>
+        <div className="mb-4">
+          <label 
+            htmlFor="description"
+            className="block text-gray-700 font-medium mb-2"
+          >
+            Description:
+          </label>
+          <input
+            className="border border-gray-400 p-2 w-full"
+            name="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+        <div className="mb-4">
+          <label 
+            htmlFor="quantity"
+            className="block text-gray-700 font-medium mb-2"
+          >
+            Quantity:
+          </label>
+          <input
+            className="border border-gray-400 p-2 w-full"
+            name="quantity"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+          />
+        </div>
+        <button 
+          className="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600" 
+          type="submit"
+        >
+          Edit
+        </button>
       </form>
     </div>
   );
