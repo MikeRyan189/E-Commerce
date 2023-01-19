@@ -75,6 +75,7 @@ const Cart = () => {
                   <div className="px-6 py-4">
                     <div className="font-bold text-xl mb-2">{product.name}</div>
                     <p className="text-gray-700 text-base">${product.price}</p>
+                    <p className="text-gray-700 text-base">Quantity: {product.cartProduct.quantity}</p>
                   </div>
                 </Link>
                 <div className="px-6 py-4">

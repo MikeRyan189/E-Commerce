@@ -90,6 +90,8 @@ export default function Example() {
           <div className="mx-auto max-w-3xl pt-20 pb-32 sm:pt-48 sm:pb-40">
             <div>
               <div>
+                <h1 className="text-6xl italic lg:text-center">Grace Shopper</h1>
+                <span></span>
                 <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl">
                   The All-In-One ECommerce platform
                 </h1>

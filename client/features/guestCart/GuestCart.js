@@ -2,13 +2,13 @@
 import React, {useState, useEffect} from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProductsAsync, selectProducts } from "../allproducts/productsSlice";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
 const GuestCart = () => {
 
- 
+ const navigate = useNavigate();
   const handleRemoveFromCart = (product)=>{
 
 localStorage.removeItem(`${product.id}`)
@@ -62,7 +62,7 @@ let totalMap;
   }
 
   const handleNavigate = () => {
-    navigate("/checkout");
+    navigate("/GuestCheckout");
   };
 
 
@@ -79,13 +79,14 @@ let totalMap;
                 <div className="px-6 py-4">
                   <div className="font-bold text-xl mb-2">{product.name}</div>
                   <p className="text-gray-700 text-base">${product.price}</p>
+                  <p className="text-gray-700 text-base">Quantity: {product.cartQuantity}</p>
                 </div>
               </Link>
               <div className="px-6 py-4">
-                <button onClick={() => handleAddCount(product)}>
+                <button classname = " text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-lg hover:shadow-md" onClick={() => handleAddCount(product)}>
                   Increase Quantity
                 </button>
-                <button onClick={() => handleDecreaseCount(product)}>
+                <button classname = " text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-lg hover:shadow-md" onClick={() => handleDecreaseCount(product)}>
                   Decrease Quantity
                 </button>
                 <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleRemoveFromCart(product.id)}>
