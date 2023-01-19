@@ -52,21 +52,20 @@ const Navbar = () => {
           Logout
         </button>
       </div>
-        // :
-        // (
-        //   // <div className='flex justify-evenly'>
-        //   //   {/* The navbar will show these links before you log in */}
-        //   //   <Link to="/login">Login</Link>
-        //   //   <Link to="/signup">Sign Up</Link>
-        //   //   <Link to="/loginAdmin">Admin Login</Link>
-        //   //   {/* <Link to="/signupAdmin">Sign Up as Admin</Link> */}
-        //   //   <Link to="/products">View Products</Link>
-        //   // </div>
-    :
-    (
-      <div></div>
-    )
-    }</nav>
+        :
+        (
+          <div>
+            {/* The navbar will show these links before you log in */}
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Sign Up</Link>
+            <Link to="/loginAdmin">Admin Login</Link>
+            {/* <Link to="/signupAdmin">Sign Up as Admin</Link> */}
+            <Link to="/products">View Products</Link>
+            <Link to="/guestCart">GuestCart</Link>
+          </div>
+        )}
+      </nav>
+      <hr />
     </div>
   );
 };
