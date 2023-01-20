@@ -29,10 +29,10 @@ const SingleUser = () => {
   },[dispatch]);
 
   return (
-    <div id="user">
+    <div className="p-4 rounded-full border-2 border-indigo-500">
             <p>{user.username}</p>
-            <button onClick={() => handleDelete(user.id)}>Delete User</button>
-            {/* <Link to="/cart">Cart<Cart userId={id}/></Link> */}
+            <button className="bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-full" onClick={() => handleDelete(user.id)}>Delete User</button>
+        
     </div>
         )}
       

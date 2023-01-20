@@ -2,13 +2,13 @@
 import React, {useState, useEffect} from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProductsAsync, selectProducts } from "../allproducts/productsSlice";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
 const GuestCart = () => {
 
- 
+ const navigate = useNavigate();
   const handleRemoveFromCart = (product)=>{
 
 localStorage.removeItem(`${product.id}`)
@@ -61,33 +61,51 @@ let totalMap;
   total = totalMap.reduce((a,b)=> a + b)
   }
 
+  const handleNavigate = () => {
+    navigate("/GuestCheckout");
+  };
+
+
    return (
-    <div id="allProducts">
-    <div>
-      <h1>Your products</h1>
-      <h1>CART TOTAL: ${total}</h1>
-      <button>Checkout</button>
-         <ul className="media-list"> 
-          { products && products.length ?
-            products.map((product) => (
-              <div key={product.id}>
-              <Link to={`/products/${product.id}`}>
-                <img src={product.imageUrl} />
-                <p>{product.name}</p>
-                <p>${product.price} each</p>
-                <p>Quantity {product.cartQuantity} </p>
+    <div className="flex flex-col items-center">
+    <h1 className="text-xl text-center mb-6">Your products</h1>
+    <h1 className="text-xl text-center mb-6">Total: {total}</h1>
+    <div className="grid grid-cols-3 gap-4">
+      {products && products.length
+        ? products.map((product) => (
+            <div className="max-w-sm rounded overflow-hidden shadow-lg">
+              <Link href={`/products/${product.id}`}>
+                <img className="w-full" src={product.imageUrl} />
+                <div className="px-6 py-4">
+                  <div className="font-bold text-xl mb-2">{product.name}</div>
+                  <p className="text-gray-700 text-base">${product.price}</p>
+                  <p className="text-gray-700 text-base">Quantity: {product.cartQuantity}</p>
+                </div>
               </Link>
-                <button onClick={()=>handleAddCount(product)}>Add Quantity</button>
-                <button onClick={()=>handleDecreaseCount(product)}>Remove Quantity</button>
-              <button onClick={()=> handleRemoveFromCart(product)}>Remove all from Cart</button>
+              <div className="px-6 py-4">
+                <button classname = " text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-lg hover:shadow-md" onClick={() => handleAddCount(product)}>
+                  Increase Quantity
+                </button>
+                <button classname = " text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-lg hover:shadow-md" onClick={() => handleDecreaseCount(product)}>
+                  Decrease Quantity
+                </button>
+                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleRemoveFromCart(product.id)}>
+                  Remove all from Cart
+                  </button>
               </div>
-             )): " "} 
-        </ul>  
-      </div>
-      
+            </div>
+          ))
+        : ""}
+    </div>
+    <button
+      className="bg-sky-400 text-white py-1.5 px-3 rounded-lg hover:bg-sky-600"
+      onClick={handleNavigate}
+    >
+      Checkout
+    </button>
   </div>
-   )
-  }
+);
+};
    
 
 

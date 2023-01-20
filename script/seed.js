@@ -17,12 +17,14 @@ const seed = async () => {
       name: faker.commerce.productName(),
       price: faker.commerce.price(),
       description: faker.commerce.productDescription(),
-      imageUrl: faker.image.imageUrl(),  
+      imageUrl: `https://source.unsplash.com/random/200x200?sig=${i}`,  
       quantity : Math.floor(Math.random() * 100),
       cartQuantity: 1   
     });
   }
-  //await User.create({username: "admin", password: "12345", isAdmin: true })
+  // await User.create({username: "admin", password: "12345", isAdmin: true })
+  const admin = await User.create({username: "admin", password: "12345", isAdmin: true })
+ await Cart.create({userId : admin.id});
 };
 
 async function runSeed() {

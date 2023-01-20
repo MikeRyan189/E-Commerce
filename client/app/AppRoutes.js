@@ -13,7 +13,9 @@ import AllUsersAdmin from "../features/usersadmin/AllUsers";
 import SingleUser from "../features/usersadmin/SingleUser";
 import Cart from "../features/cart/Cart";
 import GuestCart from "../features/guestCart/GuestCart";
-import Checkout from '../features/checkout/Checkout'
+import Checkout from "../features/checkout/Checkout";
+import LandingPage from "../features/landingPage/LandingPage";
+import GuestCheckout from "../features/guestCheckout/GuestCheckout"
 
 /**
  * COMPONENT
@@ -32,27 +34,15 @@ const AppRoutes = () => {
     <div>
       {isLoggedIn && !isAdmin ? (
         <Routes>
-          <Route path="/*" element={<Home />} />
-
-          <Route to="/home" element={<Home />} />
-
-          {/* <Route
+          <Route
           path="/users/:id"
-          element={<SingleUser />} /> */}
-
- <Route
-          path="/cart"
-          element={<Cart />} />
-  <Route
-          path="/products"
-          element={<AllProducts />} />
-          <Route
-          path="/products/:id"
-          element={<SingleProduct />} />
-          <Route
-          path="/checkout"
-          element={<Checkout />} />
-
+          element={<SingleUser />} />
+          <Route path="/*" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/products" element={<AllProducts />} />
+          <Route path="/products/:id" element={<SingleProduct />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       ) : isAdmin ? (
         <Routes>
@@ -80,25 +70,17 @@ const AppRoutes = () => {
               <AuthForm name="signupAdmin" displayName="Sign Up Admin" />
             }
           />
-
           <Route path="/admin/products" element={<AllProductsAdmin />} />
-
           <Route path="/products/:id" element={<SingleProduct />} />
-
           <Route path="/admin/products/:id" element={<SingleProductAdmin />} />
-
           <Route path="/admin/users" element={<AllUsersAdmin />} />
-
           <Route path="/users/:id" element={<SingleUser />} />
-
           <Route path="/admin/products/:id" element={<SingleProductAdmin />} />
         </Routes>
       ) : (
         <Routes>
-          <Route
-            path="/*"
-            element={<AuthForm name="login" displayName="Login" />}
-          />
+          <Route path="/*" element={<LandingPage />} />
+          <Route path="/home" element={<LandingPage />} />
           <Route
             path="/login"
             element={<AuthForm name="login" displayName="Login" />}
@@ -115,16 +97,12 @@ const AppRoutes = () => {
           />
 
           <Route path="/products" element={<AllProducts />} />
-
           <Route path="/products/:id" element={<SingleProduct />} />
-
           {/* <Route path="/admin/products/:id" element={<SingleProductAdmin />} /> */}
-
           <Route path="/guestCart" element={<GuestCart />} />
-
           <Route path="/admin/users" element={<AllUsersAdmin />} />
-
           <Route path="/users/:id" element={<SingleUser />} />
+          <Route path="/guestCheckout" element={<GuestCheckout />} />
         </Routes>
       )}
     </div>
