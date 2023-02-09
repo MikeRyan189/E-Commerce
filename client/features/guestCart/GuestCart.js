@@ -74,7 +74,7 @@ let totalMap;
       {products && products.length
         ? products.map((product) => (
             <div className="max-w-sm rounded overflow-hidden shadow-lg">
-              <Link href={`/products/${product.id}`}>
+              <Link to={`/products/${product.id}`}>
                 <img className="w-full" src={product.imageUrl} />
                 <div className="px-6 py-4">
                   <div className="font-bold text-xl mb-2">{product.name}</div>
