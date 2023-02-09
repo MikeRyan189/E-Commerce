@@ -89,7 +89,7 @@ let totalMap;
                 <button classname = " text-white bg-gray-700 hover:bg-gray-900 p-3 rounded-lg hover:shadow-md" onClick={() => handleDecreaseCount(product)}>
                   Decrease Quantity
                 </button>
-                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleRemoveFromCart(product.id)}>
+                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleRemoveFromCart(product)}>
                   Remove all from Cart
                   </button>
               </div>
