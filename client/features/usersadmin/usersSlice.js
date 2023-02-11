@@ -8,6 +8,11 @@ export const fetchUsersAsync = createAsyncThunk("allUsers", async () => {
       return data;
     });
 
+    export const fetchUsersByUsernameAsync = createAsyncThunk("allUsersByUsername", async (username) => {
+           const { data } = await axios.get(`/api/users/username/${username}`);
+           return data;
+         });
+
     export const addUserAsync = createAsyncThunk("addUser", async ({username, password}) => {
       
       const { data } = await axios.post(`/api/users`, {username, password});
@@ -30,6 +35,9 @@ export const fetchUsersAsync = createAsyncThunk("allUsers", async () => {
     reducers: {},
     extraReducers: (builder) => {
       builder.addCase(fetchUsersAsync.fulfilled, (state, action) => {
+        return action.payload;
+      });
+      builder.addCase(fetchUsersByUsernameAsync.fulfilled, (state, action) => {
         return action.payload;
       });
       builder.addCase(addUserAsync.fulfilled, (state, action) => {

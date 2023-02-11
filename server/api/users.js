@@ -12,6 +12,14 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+router.get('/username/:username', async (req, res, next) => {
+  try {
+    const users = await User.findAll({ where: {username: req.params.username}});
+    res.json(users)
+  } catch (err) {
+    next(err)
+  }
+})
 
 router.get('/:userId', async (req, res, next) => {
   try {

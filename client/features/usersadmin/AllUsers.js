@@ -1,13 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectUsers } from "../usersadmin/usersSlice";
 import { fetchUsersAsync } from "../usersadmin/usersSlice";
 import { deleteSingleUserAsync } from "../usersadmin/usersSlice";
 import { deleteSingleCartAsync } from "../usersadmin/usersSlice";
+import { fetchUsersByUsernameAsync } from "../usersadmin/usersSlice";
 
 const AllUsersAdmin = () => {
   const users = useSelector(selectUsers);
+
+  const [ username, setUsername] = useState()
 
   const dispatch = useDispatch();
 
@@ -21,11 +24,24 @@ const AllUsersAdmin = () => {
     dispatch(fetchUsersAsync());
   }, [dispatch]);
 
+  const search = (event) =>{
+    if (event.key === 'Enter'){
+        dispatch(fetchUsersByUsernameAsync(username))
+    }
+      }
+    
+  
+
   return (
     <div id="allUsers" className="flex flex-col items-center">
-        <div className="grid grid-cols-8 gap-4">
+<div className='search' style={{marginTop: 20}}>
+      <input id='searchBar' type='text' placeholder='search by username' value={username}
+       onChange={event => setUsername(event.target.value)} onKeyDown={search}/>
+    </div>
+
+        <div id='adminUsers' className="grid grid-cols-8 gap-4">
             {users.map((user) => (
-                <div className="p-4 rounded-full border-2 border-indigo-500">
+                <div className="p-4 border-2 border-indigo-500">
                     <Link to={`/users/${user.id}`}>
                         <p className="text-indigo-500 text-lg">{user.username}</p>
                     </Link>
