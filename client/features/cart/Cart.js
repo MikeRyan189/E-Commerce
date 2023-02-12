@@ -65,7 +65,7 @@ const Cart = () => {
   return (
     <div className="flex flex-col items-center">
       <h1 className="text-xl text-center mb-6">Your products</h1>
-      <h1 className="text-xl text-center mb-6">Total: {total}</h1>
+      <h1 className="text-xl text-center mb-6">Total: ${total}</h1>
       <div className="grid grid-cols-3 gap-4">
         {products && products.length
           ? products.map((product) => (
